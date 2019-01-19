@@ -3,12 +3,13 @@
 #include <ESPmDNS.h>
 #include <ESP32Encoder.h>
 #include <AceButton.h>
+#include "Config.h"
 
 using namespace ace_button;
 
-const char *ssid = "WIFI SSID HERE";
-const char *password = "WIFI PASSWORD HERE";
-const char *masterName = "RLC";
+const char *ssid = WIFI_SSID;
+const char *password = WIFI_PASS;
+const char *masterName = HOSTNAME;
 const int rEncoderPins[] = {0, 16, 23};
 const char *controlDir = "/extCont";
 IPAddress masterAddress = IPAddress();

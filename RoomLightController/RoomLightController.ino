@@ -9,19 +9,20 @@
 #include "time.h"
 #include "State.h"
 #include "Type.h"
+#include "Config.h"
 #include <Preferences.h>
 
 //User configurable constants
 const uint16_t PixelCount = 60 * 4;
 const uint16_t PixelPin = 12;
 
-const char *ssid = "WIFI SSID HERE";
-const char *password = "WIFI PASSWORD HERE";
+const char *ssid = WIFI_SSID;
+const char *password = WIFI_PASS;
 
 const int stateCount = 5;
 const int typeCount = 4;
 
-const char *mdnsName = "RLC";
+const char *mdnsName = HOSTNAME;
 const char* ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 3600;
 const int daylightOffset_sec = 3600;

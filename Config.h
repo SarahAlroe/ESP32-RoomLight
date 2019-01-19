@@ -1,0 +1,4 @@
+
+#define WIFI_SSID "WIFI SSID HERE"
+#define WIFI_PASS "WIFI PASSWORD HERE"
+#define HOSTNAME "rlc"
