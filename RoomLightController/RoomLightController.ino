@@ -96,7 +96,7 @@ void setup() {
   Serial.print("LED Strip: ");
   strip.Begin();
   strip.Show();
-  setBrightness(255 / 2);
+  setBrightness(170);
   setState(1);
   Serial.println("ok");
   Serial.println("Setup complete");
@@ -274,35 +274,37 @@ void handleRoot(AsyncWebServerRequest *request) {
     "<!DOCTYPE html>"
     "<head><title>Room Light Control</title><link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'></head>"
     "<body><div class='container'>"
-    "<h1 class='col'>Light control</h1>"
+    "<a href='/'><h1 class='col'>Light control</h1></a>"
     "<div class='col'>"
     "<h2>Set state</h2>"
-    "<a href='?state=0' class='btn btn-dark btn-lg btn-block'>Off</a>";
+    "<form action='' method='post'>"
+    "<button name='state' value='0' class='btn btn-dark btn-lg btn-block'>Off</button>";
   for (int i = 1; i < stateCount; i++) {
-    message += "<a href='?state=" + String(i) + "' class='btn btn-primary btn-lg btn-block ";
+    message += "<button name='state' value='" + String(i) + "' class='btn btn-primary btn-lg btn-block ";
     if (i == targetState) {
       message += "active";
     }
-    message += "'>State " + String(i) + "</a>";
+    message += "'>State " + String(i) + "</button>";
   }
   message +=
-    "</div>"
+    "</form></div>"
     "<div class='col'><h2>Brightness</h2><form method='post'><div class='row'>"
     "<div class='col-auto'><input type='range' name='brightness' min='0' max='255' value='" + String(getBrightness()) + "'/></div>"
     "<div class='col'><button type='submit' class='btn btn-primary'>Set</button></div>"
     "</div></form></div>"
     "<div class='col'><h2>Customize State " + String(targetState) + "</h2><div class='row'>"
     "<div class='col-md-4'>"
-    "<h3>Type</h3>";
+    "<h3>Type</h3>"
+    "<form action='' method='post'>";
   for (int i = 0; i < typeCount; i++) {
-    message += "<a href='?setType=" + String(i) + "' class='btn btn-primary btn-block ";
+    message += "<button name='setType' value='" + String(i) + "' class='btn btn-primary btn-block ";
     if (i == state.getType()) {
       message += "active";
     }
-    message += "'>" + types[i].getDesc() + "</a>";
+    message += "'>" + types[i].getDesc() + "</button>";
   }
   message +=
-    "</div><div class='col-md-8'><h3>Set properties</h3><form method='post'>";
+    "</form></div><div class='col-md-8'><h3>Set properties</h3><form method='post'>";
   message += types[state.getType()].getSettingsHTML();
   message += "<label>Gamma correction: </label><input type='checkbox' name='gamma' ";
   if (state.getGammaCorrect()) {
@@ -313,10 +315,11 @@ void handleRoot(AsyncWebServerRequest *request) {
              "</div></div></div>";
   message +=
     "<div class='col'><h2>Static memory</h2>"
-    "<a href='?save' class='btn btn-primary btn-lg' >Save to</a> "
-    "<a href='?load' class='btn btn-primary btn-lg' >Load from</a> "
-    "<a href='?clear' class='btn btn-primary btn-lg' >Clear</a>"
-    "</div><div class='col'><h2>Info</h2>";
+    "<form action='' method='post'>"
+    "<button name='save' class='btn btn-primary btn-lg' >Save to</button> "
+    "<button name='load' class='btn btn-primary btn-lg' >Load from</button> "
+    "<button name='clear' class='btn btn-primary btn-lg' >Clear</button>"
+    "</form></div><div class='col'><h2>Info</h2>";
   struct tm timeinfo;
   getLocalTime(&timeinfo);
   message += "Time: " + String(timeinfo.tm_hour) + ":" + String(timeinfo.tm_min) + ":" + String(timeinfo.tm_sec) + "<br/>";
