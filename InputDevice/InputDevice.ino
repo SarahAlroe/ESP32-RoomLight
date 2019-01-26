@@ -54,7 +54,6 @@ void setup() {
     masterAddress = MDNS.queryHost(masterName);
   }
   Serial.println("Found master at: " + masterAddress.toString());
-  http.setReuse(true);
   digitalWrite(LED_BUILTIN, LOW);
 }
 

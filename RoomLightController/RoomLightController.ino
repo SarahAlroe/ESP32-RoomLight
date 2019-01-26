@@ -575,11 +575,11 @@ void ColorTemperatureAnimUpdate(const AnimationParam& param) {
   int dayTemp = getState().getDayTemp();
   int nightTemp = getState().getNightTemp();
 
-  int dayTime = getState().getDayTime();
-  int nightTime = getState().getNightTime();
-  int transTime = getState().getTransTime();
+  long dayTime = getState().getDayTime() * 60;
+  long nightTime = getState().getNightTime() * 60;
+  long transTime = getState().getTransTime() * 60;
 
-  int cTime = getMins();
+  long cTime = getSeconds();
 
   int currentTemp;
   if (cTime <= (dayTime - (transTime / 2)) || cTime >= (nightTime + (transTime / 2))) {
@@ -638,7 +638,7 @@ void StaticPatternAnimUpdate(const AnimationParam& param) {
   }
 }
 
-void RainbowAnimUpdate(const AnimationParam& param){
+void RainbowAnimUpdate(const AnimationParam& param) {
   for (int i = 0; i < PixelCount; i++) {
     float progress = (param.progress + (float(i) / float(PixelCount)));
     while (progress > 1.0f) {
@@ -657,10 +657,10 @@ void RainbowAnimUpdate(const AnimationParam& param){
 }
 
 //Tools
-int getMins() {
+long getSeconds() {
   struct tm timeinfo;
   getLocalTime(&timeinfo);
-  return timeinfo.tm_hour * 60 + timeinfo.tm_min;
+  return (long)timeinfo.tm_hour * 60 * 60 + (long)timeinfo.tm_min * 60 + (long)timeinfo.tm_sec;
 }
 
 String getTimeString(unsigned int mins) {
